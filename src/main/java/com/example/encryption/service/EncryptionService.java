@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Set;
 import sun.security.rsa.RSAPublicKeyImpl;
@@ -22,11 +25,12 @@ public class EncryptionService {
     public String createSecretKey(String encodedPubKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
         PublicKey publicKey = getPublicKey(encodedPubKey);
         SecretKey secretKey = generateAES();
-        String str = "hello world";
+        OAEPParameterSpec oaepParameterSpec = new OAEPParameterSpec("SHA-256", "MGF1",
+                MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT);
         Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        return Base64.encodeBase64String(cipher.doFinal(str.getBytes()));
-        //return Base64.encodeBase64String(cipher.doFinal(secretKey.getEncoded()));
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey, oaepParameterSpec);
+        byte[] result = cipher.doFinal(secretKey.getEncoded());
+        return Base64.encodeBase64String(result);
     }
 
     public String createAES(String pubKey) {
