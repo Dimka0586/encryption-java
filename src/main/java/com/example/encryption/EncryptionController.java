@@ -25,7 +25,7 @@ public class EncryptionController {
 
     @PostMapping
     public SymmetricKey exchange(@RequestBody ExchangeKeyRequest exchangeKeyRequest) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
-         encryptionService.getProviders();
+        // encryptionService.getProviders();
         // SecretKey secretKey = encryptionService.createSecretKey(exchangeKeyRequest.getPublicKey());
         //String encAES = encryptionService.createAES(exchangeKeyRequest.getPublicKey());
         //return new SymmetricKey(Base64.encodeBase64String(secretKey.getEncoded()));

@@ -20,25 +20,13 @@ public class EncryptionService {
     }
 
     public String createSecretKey(String encodedPubKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
-        /*String encryptionKeyString =  "thisisa128bitkey";
-        String originalMessage = "This is a secret message";
-        byte[] encryptionKeyBytes = encryptionKeyString.getBytes();*/
         PublicKey publicKey = getPublicKey(encodedPubKey);
         SecretKey secretKey = generateAES();
-
-
-        /*byte[] decodedPubKey = Base64.decodeBase64(encodedPubKey);
-        System.out.println("encodedPuKey: " + encodedPubKey);
-        System.out.println("decodedPuKey: " + decodedPubKey);
-        *///byte[] nonceAndCounter = new byte[16];
-        //IvParameterSpec ivSpec = new IvParameterSpec(nonceAndCounter);
-        Cipher cipher = Cipher.getInstance("RSA");
-        //System.out.println("length: " + Base64.decodeBase64(encodedPubKey).length);
-        //SecretKey secretKey = new SecretKeySpec(Base64.decodeBase64(encodedPubKey),0, 32, "AES");
+        String str = "hello world";
+        Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-
-
-        return Base64.encodeBase64String(cipher.doFinal(secretKey.getEncoded()));
+        return Base64.encodeBase64String(cipher.doFinal(str.getBytes()));
+        //return Base64.encodeBase64String(cipher.doFinal(secretKey.getEncoded()));
     }
 
     public String createAES(String pubKey) {
