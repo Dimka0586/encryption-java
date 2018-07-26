@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping(value = "/pds/attributes")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class AttributesController {
 
     @Autowired

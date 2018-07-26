@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/encryption/exchange")
-@CrossOrigin(origins = "*")
+/*@CrossOrigin(origins = "*")*/
 public class EncryptionController {
 
     @Autowired
